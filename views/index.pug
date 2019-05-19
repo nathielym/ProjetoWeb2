@@ -6,17 +6,12 @@ html
     h1 Users
     form(action='user', method='POST', accept-charset='utf-8')
         label(for='nome') User:
-        input#nome(type='text', name='nome', autocomplete='off', value='')
+        input#nome.form-control(type='text', name='nome', autocomplete='off', value='')
         label(for='senha', style='margin-left: 20px',) Senha:
-        input#senha(type='password', name='senha', autocomplete='off', value='')
+        input#senha.form-control(type='password', name='senha', autocomplete='off', value='')
         input(type='hidden', name='method', value='inserir')
         input(type='submit', style='margin-left: 20px', value='Login')
     ul
       | {{#each users}}
       li
-        | {{nome}}
-        form(action='user', method='POST', accept-charset='utf-8')
-          input(type='hidden', name='nome', value='{{nome}}')
-          input(type='hidden', name='method', value='deletar')
-          input(type='submit', value='deletar')
-      |         
+        | {{nome}}   
