@@ -1,0 +1,23 @@
+html
+  head
+    meta(http-equiv='content-type', content='text/html; charset=utf-8')
+    title User
+    link(href='./style.css', rel='stylesheet', type='text/css')
+  body
+    h1 Users
+    form(action='user', method='POST', accept-charset='utf-8')
+        label(for='nome') User:
+        input#nome(type='text', name='nome', autocomplete='off', value='')
+        label(for='senha', style='margin-left: 20px',) Senha:
+        input#nome(type='password', name='senha', autocomplete='off', value='')
+        input(type='hidden', name='method', value='inserir')
+        input(type='submit', style='margin-left: 20px', value='Login')
+    ul
+      
+      li
+        
+        form(action='user', method='POST', accept-charset='utf-8')
+          input(type='hidden', name='nome', value='{{nome}}')
+          input(type='hidden', name='method', value='deletar')
+          input(type='submit', value='deletar')
+      |         
