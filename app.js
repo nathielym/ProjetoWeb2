@@ -23,14 +23,18 @@ app.get('/post', (req, res) => {
     });
 });
 
+app.get('/newUser', (req, res) => {
+  UserDAO.get().then((users) => {
+    res.render('newUser', { users: users });
+  });
+});
+
 app.post('/user', (req, res) => {
   let nome = req.body.nome,
     senha = req.body.senha,
     method = req.body.method;
   if (method === 'inserir') {
-    // UserDAO.insert(nome, senha).then((conn) => {
-    //     res.redirect('/user');
-    // });
+    
     UserDAO.get().then((users) => {
       users.forEach(function (user) {
         if (nome == user.nome && senha == user.senha)
@@ -41,13 +45,38 @@ app.post('/user', (req, res) => {
         }
       });
     });
+    
   }
-
   if (method === 'deletar') {
     UserDAO.delete(nome).then((conn) => {
       res.redirect('/user');
     });
   }
+
+});
+
+app.post('/newUser', (req,res) => {
+  console.log("entrei");
+
+  let nome = req.body.nome,
+    senha = req.body.senha,
+    method = req.body.method;
+    console.log("entrei");
+    if (method === 'cadastrar'){
+      UserDAO.get().then((users) => {
+        users.forEach(function (user) {
+          if(nome == user.nome){
+            res.write('<h1>nome ja utilizado</h1><form action="user" method="GET" accept-charset="utf-8"><input type="submit" value="Voltar"></form>');
+          }
+          res.redirect('/user');
+        });
+        if(nome != "" && senha != ""){
+          UserDAO.insert(nome, senha).then((conn) => {
+           res.redirect('/user');
+        });
+      }
+      });
+    }
 });
 
 app.post('/post', (req, res) => {
