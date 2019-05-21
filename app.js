@@ -1,5 +1,6 @@
 let http = require('http'),
 
+
 UserDAO = require('./dao/userDAO'),
 PostDAO = require('./dao/postDAO')
 path = require('path'),
@@ -26,6 +27,12 @@ app.get('/post', (req, res) => {
 app.get('/newUser', (req, res) => {
   UserDAO.get().then((users) => {
     res.render('newUser', { users: users });
+  });
+});
+
+app.get('/profile', (req, res) => {
+  UserDAO.get().then((users) => {
+    res.render('profile', { users: users });
   });
 });
 
@@ -60,8 +67,6 @@ app.post('/user', (req, res) => {
 });
 
 app.post('/newUser', (req,res) => {
-  console.log("entrei");
-
   let nome = req.body.nome,
     senha = req.body.senha,
     method = req.body.method;
@@ -71,8 +76,8 @@ app.post('/newUser', (req,res) => {
         users.forEach(function (user) {
           if(nome == user.nome){
             res.write('<h1>nome ja utilizado</h1><form action="user" method="GET" accept-charset="utf-8"><input type="submit" value="Voltar"></form>');
+            res.redirect('/user');
           }
-          res.redirect('/user');
         });
         if(nome != "" && senha != ""){
           UserDAO.insert(nome, senha).then((conn) => {
@@ -102,4 +107,16 @@ app.post('/post', (req, res) => {
     }
 });
 
-app.listen(3000);
+app.post('/profile', (req,res) => {
+
+  let nome = req.body.nome,
+    method = req.body.method;
+    if (method === 'follow'){
+        UserDAO.seguir(nome).then((conn) => {
+            res.redirect('/post');
+        });
+      }
+});
+
+
+app.listen(process.env.PORT);

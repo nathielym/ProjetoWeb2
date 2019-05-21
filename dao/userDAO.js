@@ -34,4 +34,11 @@ module.exports = class UserDAO {
       db.collection('user').deleteOne({ nome: nome });
     });
   }
+
+  static seguir (nome){
+    return UserDAO.connect().then((con) => {
+            let db = conn.db('mongo-test');
+      db.collection('user').updateOne({$push: {seguindo : nome}});
+    });
+  }
 }
