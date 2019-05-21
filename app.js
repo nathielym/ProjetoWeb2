@@ -30,16 +30,19 @@ app.post('/user', (req, res) => {
   if (method === 'inserir') {
     // UserDAO.insert(nome, senha).then((conn) => {
     //     res.redirect('/user');
-    // });
+    
+    var userT = null;
     UserDAO.get().then((users) => {
       users.forEach(function (user) {
         if (nome == user.nome && senha == user.senha)
-          res.redirect('/post')
+          userT = user;
+      });
+      if (userT != null)
+        res.redirect('/post');
         else{
           res.status(403);
           res.write('<h1>Login incorreto!!!</h1><form action="user" method="GET" accept-charset="utf-8"><input type="submit" value="Voltar"></form>');
         }
-      });
     });
   }
 
