@@ -14,13 +14,16 @@
             <label for="nome">Nome:</label>
             <input type="text" name="nome"
                    autocomplete="off" value="" id="nome" />
+                   <input type="password" name="senha"
+                   autocomplete="off" value="" id="senha" />
             <input type="hidden" name="method" value="inserir" />
             <input type="submit" value="Adicionar"/>
+            <input type="button" value="Testar" click=""/>
         </form>
 
         <ul>
         {{#each users}}
-            <li>{{nome}}
+            <li>{{nome}} | {{senha}}
                 <form action="user" method="POST" accept-charset="utf-8">
                     <input type="hidden" name="nome" value="{{nome}}" />
                     <input type="hidden" name="method" value="deletar" />
