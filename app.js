@@ -11,7 +11,9 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'view'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
-
+app.get('/', function(req,res){
+  res.redirect('/user');
+});
 app.get('/user', (req, res) => {
   UserDAO.get().then((users) => {
     res.render('user', { users: users });
