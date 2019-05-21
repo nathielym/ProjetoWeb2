@@ -34,11 +34,11 @@ app.post('/user', (req, res) => {
     UserDAO.get().then((users) => {
       users.forEach(function (user) {
         if (nome == user.nome && senha == user.senha)
-          console.log("Senha correta!!");
-        else
-          console.log("Senha incorreta!!");
-          console.log(user.senha + " | " + senha);
-          console.log(user.nome + " | " + nome);
+          res.redirect('/post')
+        else{
+          res.status(403);
+          res.write('<h1>Login incorreto!!!</h1><form action="user" method="GET" accept-charset="utf-8"><input type="submit" value="Voltar"></form>');
+        }
       });
     });
   }
