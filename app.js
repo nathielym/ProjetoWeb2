@@ -9,10 +9,20 @@ let http = require('http'),
 
   var aux;
 
+UserDAO = require('./dao/userDAO'),
+PostDAO = require('./dao/postDAO')
+path = require('path'),
+express = require('express'),
+app = express();
+
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'view'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
+
+app.get('/', function(req,res){
+  res.redirect('/user');
+});
 app.get('/user', (req, res) => {
   UserDAO.get().then((users) => {
     res.render('user', { users: users });
@@ -22,6 +32,12 @@ app.get('/user', (req, res) => {
 
 app.get('/', function(req, res) {
     res.redirect('/user');
+});
+
+app.get('/profile', (req, res) => {
+  UserDAO.get().then((users) => {
+    res.render('profile', { users: users });
+  });
 });
 
 app.post('/user', (req, res) => {
@@ -108,7 +124,20 @@ app.post('/newUser', (req, res) => {
       }
     });
   }
+
 });
 
 
-app.listen(3000);
+app.post('/profile', (req,res) => {
+
+  let nome = req.body.nome,
+    method = req.body.method;
+    if (method === 'follow'){
+        UserDAO.seguir(nome).then((conn) => {
+            res.redirect('/post');
+        });
+      }
+});
+
+
+app.listen(process.env.PORT);

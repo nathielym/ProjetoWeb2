@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="content-type"
+              content="text/html; charset=utf-8" />
+        <title>Quem Seguir</title>
+        <link href="./style.css" rel="stylesheet"
+              type="text/css" />
+    </head>
+    <body>
+        <h1>Quem seguir</h1>
+
+        <ul>
+        {{#each users}}
+            <li>{{nome}}
+                <form action="profile" method="POST" accept-charset="utf-8">
+                    <input type="hidden" name="nome" value="{{nome}}" />
+                    <input type="hidden" name="method" value="follow" />
+                    <input type="submit" value="Seguir">
+                </form>
+            </li>
+        {{/each}}
+        </ul>
+    </body>
+</html>
