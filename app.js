@@ -5,6 +5,8 @@ let http = require('http'),
   express = require('express'),
   app = express();
 
+  var router = express.Router();
+
   var aux;
 
 app.set('view engine', 'hbs');
@@ -15,6 +17,11 @@ app.get('/user', (req, res) => {
   UserDAO.get().then((users) => {
     res.render('user', { users: users });
   });
+});
+
+
+app.get('/', function(req, res) {
+    res.redirect('/user');
 });
 
 app.post('/user', (req, res) => {
