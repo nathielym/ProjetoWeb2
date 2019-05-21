@@ -74,7 +74,9 @@ app.post('/newUser', (req,res) => {
           UserDAO.insert(nome, senha).then((conn) => {
            res.redirect('/user');
         });
-      }
+        }else{
+          res.write('<h1>campos não podem estar em branco</h1><form action="newuser" method="GET" accept-charset="utf-8"><input type="submit" value="Voltar"></form>');
+        }
       });
     }
 });
